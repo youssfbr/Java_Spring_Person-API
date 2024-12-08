@@ -1,14 +1,15 @@
 package com.github.youssfbr.person_api_2024.api.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.github.youssfbr.person_api_2024.customers.CreateCustomerDTO;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/people")
+@RequestMapping("persons")
 public class PersonController {
-    @GetMapping
-    public String getPerson() {
-        return "OK!";
+
+    @PostMapping
+    public ResponseEntity<CreateCustomerDTO> cadastrar(@RequestBody CreateCustomerDTO dto) {
+        return ResponseEntity.ok(dto);
     }
 }
