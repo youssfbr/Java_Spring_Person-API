@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("customers")
-public class PersonController {
+public class CustomerController {
 
     private final ICustomerService customerService;
 
-    public PersonController(ICustomerService customerService) {
+    public CustomerController(ICustomerService customerService) {
         this.customerService = customerService;
     }
 
