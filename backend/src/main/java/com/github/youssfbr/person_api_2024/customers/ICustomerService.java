@@ -17,7 +17,7 @@ public interface ICustomerService {
     CustomerDetailDTO detail(Long id);
 
     CustomerDetailDTO createCustomer(CreateCustomerDTO dto);
-    void updateCustomer(@Valid UpdateCustomerDTO dto);
+    CustomerDetailDTO updateCustomer(@Valid UpdateCustomerDTO dto);
 
     void delete(Long id);
 }

@@ -186,7 +186,7 @@ public class Customer {
         active = false;
     }
 
-    public void updateData(UpdateCustomerDTO dto) {
+    public Customer updateData(UpdateCustomerDTO dto) {
         if (dto.fullName() != null) fullName = dto.fullName();
         if (dto.firstName() != null) firstName = dto.firstName();
         if (dto.lastName() != null) lastName = dto.lastName();
@@ -196,6 +196,8 @@ public class Customer {
         if (dto.note() != null) note = dto.note();
         //if (dto.phones() != null) phones.
         if (dto.address() != null) address.updateData(dto.address());
+
+        return this;
     }
 
 

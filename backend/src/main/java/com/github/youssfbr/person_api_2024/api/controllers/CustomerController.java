@@ -53,9 +53,8 @@ public class CustomerController {
     }
 
     @PutMapping
-    public  ResponseEntity<Void> update(@RequestBody @Valid UpdateCustomerDTO dto) {
-        customerService.updateCustomer(dto);
-        return ResponseEntity.ok().build();//.build();//  (customerService.atualizarInformacoes(dados));
+    public  ResponseEntity<CustomerDetailDTO> update(@RequestBody @Valid UpdateCustomerDTO dto) {
+        return ResponseEntity.ok(customerService.updateCustomer(dto));
     }
 
     @DeleteMapping("/{id}")

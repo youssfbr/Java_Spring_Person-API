@@ -7,7 +7,6 @@ import com.github.youssfbr.person_api_2024.customers.dtos.UpdateCustomerDTO;
 import com.github.youssfbr.person_api_2024.infra.exceptions.CpfException;
 import com.github.youssfbr.person_api_2024.infra.exceptions.EmailException;
 import com.github.youssfbr.person_api_2024.infra.exceptions.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -43,8 +42,7 @@ public class CustomerService implements ICustomerService {
     @Override
     @Transactional(readOnly = true)
     public CustomerDetailDTO detail(Long id) {
-        return customerRepository.findById(id)
-                .map(CustomerDetailDTO::new).orElseThrow();
+        return new CustomerDetailDTO(getReferenceById(id));
     }
 
     @Override
@@ -60,10 +58,9 @@ public class CustomerService implements ICustomerService {
 
     @Override
     @Transactional
-    public void updateCustomer(UpdateCustomerDTO dto) {
+    public CustomerDetailDTO updateCustomer(UpdateCustomerDTO dto) {
 
-        try {
-            final Customer customer = getReferenceById(dto.id());
+            Customer customer = getReferenceById(dto.id());
 
             if (!dto.cpf().equals(customer.getCpf())) {
                 checkIfCfpExists(dto.cpf());
@@ -73,25 +70,19 @@ public class CustomerService implements ICustomerService {
                 checkIfEmailExists(dto.email());
             }
 
-            customer.updateData(dto);
-        } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Resource with ID " + dto.id() + " Not found");
-        }
+        return new CustomerDetailDTO(customer.updateData(dto));
     }
 
     @Override
     @Transactional
     public void delete(Long id) {
-        try {
-            final Customer customer = getReferenceById(id);
-            customer.inactivate();
-        } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Resource with ID " + id + " Not found");
-        }
+        final Customer customer = getReferenceById(id);
+        customer.inactivate();
     }
 
     private Customer getReferenceById(Long id) {
-            return customerRepository.getReferenceById((id));
+        return  customerRepository.getReferenceByIdAndActiveTrue(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource with ID " + id + " Not found"));
     }
 
     private void checkIfEmailExists(String email) {

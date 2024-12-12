@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ICustomerRepository extends JpaRepository<Customer , Long> {
 
@@ -13,4 +14,6 @@ public interface ICustomerRepository extends JpaRepository<Customer , Long> {
 
     boolean existsByCpf(String cpf);
     boolean existsByEmail(String email);
+
+    Optional<Customer> getReferenceByIdAndActiveTrue(Long id);
 }
