@@ -1,4 +1,4 @@
-package com.github.youssfbr.person_api_2024.customers;
+package com.github.youssfbr.person_api_2024.customers.dtos;
 
 import com.github.youssfbr.person_api_2024.addresses.CreateAddressDTO;
 import com.github.youssfbr.person_api_2024.phones.CreatePhoneDTO;
